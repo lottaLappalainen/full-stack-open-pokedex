@@ -23,6 +23,7 @@ const App = () => {
   if (isLoading) {
     return <LoadingSpinner />;
   }
+  
   if (error) {
     return <ErrorMessage error={error} />;
   }
@@ -39,9 +40,10 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<PokemonList pokemonList={pokemonList} />} />
-      <Route path="/pokemon/:name" element={
-        <PokemonPage pokemonList={pokemonList} previous={previous} next={next} />
-      } />
+      <Route 
+        path="/pokemon/:name" 
+        element={<PokemonPage pokemonList={pokemonList} previous={previous} next={next} />} 
+      />
     </Routes>
   );
 };
