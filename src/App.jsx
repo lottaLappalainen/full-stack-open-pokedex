@@ -6,7 +6,7 @@ import ErrorMessage from './ErrorMessage'
 import PokemonPage from './PokemonPage'
 import PokemonList from './PokemonList'
 
-const mapResults = ({ results }) => 
+const mapResults = ({ results }) =>
   results.map(({ url, name }) => ({
     url,
     name,
@@ -16,7 +16,7 @@ const mapResults = ({ results }) =>
 const App = () => {
   const match = useMatch('/pokemon/:name')
   const { data: pokemonList, error, isLoading } = useApi(
-    'https://pokeapi.co/api/v2/pokemon/?limit=50', 
+    'https://pokeapi.co/api/v2/pokemon/?limit=50',
     mapResults
   )
 
@@ -40,9 +40,9 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<PokemonList pokemonList={pokemonList} />} />
-      <Route 
-        path="/pokemon/:name" 
-        element={<PokemonPage pokemonList={pokemonList} previous={previous} next={next} />} 
+      <Route
+        path="/pokemon/:name"
+        element={<PokemonPage pokemonList={pokemonList} previous={previous} next={next} />}
       />
     </Routes>
   )
