@@ -26,7 +26,7 @@ jobs:
         uses: stegzilla/discord-notify@v4
         if: success()
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: Health check passed!
           message: 'The health check for the https://full-stack-open-pokedex-xobi.onrender.com/ succeeded.'
 
@@ -34,6 +34,6 @@ jobs:
         uses: stegzilla/discord-notify@v4
         if: failure()
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: Health check failed!
           message: 'The health check for https://full-stack-open-pokedex-xobi.onrender.com/ failed.'
