@@ -32,13 +32,13 @@ jobs:
       - name: Run build
         run: npm run build
 
-      - name: Build Failure Notification
-        if: failure()
-        uses: rjstone/discord-webhook-notify@v1
+      - name: Notify build failure
+        uses: stegzilla/discord-notify@v4
+        if: error()
         with:
-          severity: error
-          text: Build failed
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
+          title: Build failed
+          username: GitHub PR Notifier
 
       #- name: Install Playwright dependencies
        # run: npx playwright install --with-deps
@@ -50,15 +50,13 @@ jobs:
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && env.SKIP_DEPLOY == 'false' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
 
-      - name: Notify success
+      - name: Notify deployment success
         uses: stegzilla/discord-notify@v4
         if: success()
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: A new version of Pokedex deployed!
           message: 'to https://full-stack-open-pokedex-jvcn.onrender.com/ by **${{ github.actor }}**'
-          include_image: true
-          avatar_url: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
           username: GitHub PR Notifier
 
   tag_release:
