@@ -40,8 +40,11 @@ jobs:
           text: Build failed
           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
-     # - name: Install Playwright dependencies
-     #   run: npx playwright install --with-deps
+      - name: Install Playwright dependencies
+        run: npx playwright install --with-deps
+
+      - name: e2e tests
+        run: npm run test:e2e
 
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && env.SKIP_DEPLOY == 'false' }}
@@ -51,7 +54,7 @@ jobs:
         uses: stegzilla/discord-notify@v4
         if: success()
         with:
-          webhook_url: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: A new version of Pokedex deployed!
           message: 'to https://full-stack-open-pokedex-jvcn.onrender.com/ by **${{ github.actor }}**'
           include_image: true
