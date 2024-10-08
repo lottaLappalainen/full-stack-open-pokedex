@@ -40,11 +40,11 @@ jobs:
           title: Build failed
           username: GitHub PR Notifier
 
-      #- name: Install Playwright dependencies
-       # run: npx playwright install --with-deps
+      - name: Install Playwright dependencies
+        run: npx playwright install --with-deps
 
-      #- name: e2e tests
-      #  run: npm run test:e2e
+      - name: e2e tests
+        run: npm run test:e2e
 
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && env.SKIP_DEPLOY == 'false' }}
@@ -56,7 +56,7 @@ jobs:
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: A new version of Pokedex deployed!
-          message: 'to https://full-stack-open-pokedex-jvcn.onrender.com/ by **${{ github.actor }}**'
+          message: 'to https://full-stack-open-pokedex-xobi.onrender.com/ by **${{ github.actor }}**'
           username: GitHub PR Notifier
 
   tag_release:
