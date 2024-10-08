@@ -32,12 +32,28 @@ jobs:
       - name: Run build
         run: npm run build
 
+      - name: Build Failure Notification
+        if: failure()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: error
+          text: Build failed
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
 
       - name: Trigger deployment
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && env.SKIP_DEPLOY == 'false' }}
         run: curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
+
+      - name: Deployment Success Notification
+        if: success()
+        uses: rjstone/discord-webhook-notify@v1
+        with:
+          severity: info
+          text: A new version of pokedex deployed.
+          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
 
   tag_release:
     needs: [simple_deployment_pipeline]
