@@ -28,6 +28,9 @@ jobs:
 
       - name: Run unit tests
         run: npm run test
+      
+      - name: Run build
+        run: npm run build
 
       - name: Install Playwright dependencies
         run: npx playwright install --with-deps
