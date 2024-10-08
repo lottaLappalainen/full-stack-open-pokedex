@@ -1,7 +1,13 @@
 name: Deployment pipeline
 
 on:
-  [push]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize]
+
 env:
   SKIP_DEPLOY: ${{ contains(join(github.event.commits.*.message, ' '), '#skip') }}
 
@@ -28,7 +34,7 @@ jobs:
 
       - name: Notify build failure
         uses: stegzilla/discord-notify@v4
-        if: error()
+        if: failure()
         with:
           webhook_url: ${{ secrets.DISCORD_WEBHOOK }}
           title: Build failed
